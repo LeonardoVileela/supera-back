@@ -46,7 +46,7 @@ class RouteServiceProvider extends ServiceProvider
                         Route::prefix('user')->group(
                             base_path('app/Domains/Users/routes/Users.php')
                         );
-                        Route::prefix('login')->group(
+                        Route::prefix('auth')->group(
                             base_path('app/Domains/Users/routes/Auth.php')
                         );
                     }
