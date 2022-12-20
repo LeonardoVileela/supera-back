@@ -42,7 +42,7 @@ class RouteServiceProvider extends ServiceProvider
                 ->middleware('api')
                 ->namespace($this->namespace)
                 ->group(
-                    function (){
+                    function () {
                         Route::prefix('user')->group(
                             base_path('app/Domains/Users/routes/Users.php')
                         );
