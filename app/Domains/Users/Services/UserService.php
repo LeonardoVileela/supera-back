@@ -3,6 +3,7 @@
 namespace App\Domains\Users\Services;
 
 use App\Domains\Users\Repositories\UserRepository;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -15,6 +16,9 @@ class UserService
         $this->userRepository = $userRepository;
     }
 
+    /**
+     * @throws HttpResponseException
+     */
     public function register(Request $request): \Illuminate\Http\JsonResponse
     {
         try {
@@ -24,7 +28,7 @@ class UserService
                 'password' => 'required|string|min:8'
             ]);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 404);
+            throw new HttpResponseException(response()->json(['message' => 'invalid user'], 400));
         }
 
         $user = $this->userRepository->create([
@@ -33,13 +37,7 @@ class UserService
             'password' => Hash::make($validatedData['password'])
         ]);
 
-
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'Bearer'
-        ]);
+        return response()->json([], 201);
 
     }
 

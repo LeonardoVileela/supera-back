@@ -49,6 +49,9 @@ class RouteServiceProvider extends ServiceProvider
                         Route::prefix('auth')->group(
                             base_path('app/Domains/Users/routes/Auth.php')
                         );
+                        Route::prefix('car')->group(
+                            base_path('app/Domains/Cars/routes/Cars.php')
+                        );
                     }
                 );
 
