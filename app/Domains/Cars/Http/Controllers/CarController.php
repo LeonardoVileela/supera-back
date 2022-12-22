@@ -4,7 +4,9 @@ namespace App\Domains\Cars\Http\Controllers;
 
 use App\Domains\Cars\Services\CarService;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Ramsey\Uuid\Uuid;
 
 class CarController extends Controller
 {
@@ -16,59 +18,34 @@ class CarController extends Controller
         $this->carService = $carService;
     }
 
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function all(Request $request, $id): JsonResponse
     {
-        //
+        return $this->carService->all($request);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function save(Request $request): \Illuminate\Http\JsonResponse
+    public function closeToMaintenanceDate(Request $request): JsonResponse
+    {
+        return $this->carService->closeToMaintenanceDate($request);
+    }
+
+    public function save(Request $request): JsonResponse
     {
         return $this->carService->saveCar($request);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): JsonResponse
     {
-        //
+        return $this->carService->updateCar($request, $id);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function delete($id): JsonResponse
     {
-        //
+        return $this->carService->deleteCar($id);
     }
 }

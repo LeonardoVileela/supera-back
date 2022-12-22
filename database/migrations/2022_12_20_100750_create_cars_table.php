@@ -22,6 +22,10 @@ class CreateCarsTable extends Migration
             $table->bigInteger("km");
             $table->timestamps();
         });
+
+        Schema::table('cars', function (Blueprint $table) {
+            $table->foreignId('user_id')->constrained();
+        });
     }
 
     /**

@@ -7,9 +7,13 @@ use Illuminate\Database\Eloquent\Collection;
 
 class CarRepository
 {
-    public function getAll(): Collection
+    public function getAll($id): Collection
     {
-        return Car::all();
+        return Car::all()->where('user_id', $id);
+    }
+    public function getCloseToMaintenanceDate($id): Collection
+    {
+        return Car::with(['maintenance'])->where('user_id', $id)->get();
     }
 
     public function getById($id): Car
