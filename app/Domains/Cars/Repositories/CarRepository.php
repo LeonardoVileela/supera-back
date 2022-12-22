@@ -11,7 +11,7 @@ class CarRepository
     {
         return Car::all()->where('user_id', $id);
     }
-    public function getCloseToMaintenanceDate($id): Collection
+    public function getCarsWithMaintenance($id): Collection
     {
         return Car::with(['maintenance'])->where('user_id', $id)->get();
     }

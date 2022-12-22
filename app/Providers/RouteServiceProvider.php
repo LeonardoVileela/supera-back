@@ -52,6 +52,9 @@ class RouteServiceProvider extends ServiceProvider
                         Route::prefix('car')->group(
                             base_path('app/Domains/Cars/routes/Cars.php')
                         );
+                        Route::prefix('maintenance')->group(
+                            base_path('app/Domains/Maintenances/routes/Maintenances.php')
+                        );
                     }
                 );
 

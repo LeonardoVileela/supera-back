@@ -88,9 +88,9 @@ class CarService
         return response()->json($this->carRepository->getAll($request->user()->id), 200);
     }
 
-    public function closeToMaintenanceDate(Request $request): \Illuminate\Http\JsonResponse
+    public function carsWithMaintenance(Request $request): \Illuminate\Http\JsonResponse
     {
-        return response()->json($this->carRepository->getCloseToMaintenanceDate($request->user()->id), 200);
+        return response()->json($this->carRepository->getCarsWithMaintenance($request->user()->id), 200);
     }
 
 }

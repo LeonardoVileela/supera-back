@@ -16,7 +16,7 @@ class CreateMaintenanceTable extends Migration
         Schema::create('maintenances', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->date('maintenance_date');
-            $table->date('next_maintenance_date');
+            $table->bigInteger("km");
             $table->timestamps();
 
         });

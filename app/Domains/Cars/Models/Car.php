@@ -19,6 +19,7 @@ class Car extends Model
         'color',
         'license_plate',
         'km',
+        'next_maintenance_date',
         'user_id'
     ];
 

@@ -6,8 +6,6 @@ use App\Domains\Cars\Services\CarService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Ramsey\Uuid\Uuid;
-
 class CarController extends Controller
 {
 
@@ -25,7 +23,7 @@ class CarController extends Controller
 
     public function closeToMaintenanceDate(Request $request): JsonResponse
     {
-        return $this->carService->closeToMaintenanceDate($request);
+        return $this->carService->carsWithMaintenance($request);
     }
 
     public function save(Request $request): JsonResponse

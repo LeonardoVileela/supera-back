@@ -2,8 +2,4 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('maintenances')->group(function () {
-       Route::get('/', function(){
-           return 'test';
-       });
-});
+Route::post('/save/{id}', [\App\Domains\Maintenances\Http\Controllers\MaintenanceController::class, 'save'])->middleware('auth:sanctum');

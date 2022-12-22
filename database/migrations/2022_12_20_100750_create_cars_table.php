@@ -20,6 +20,7 @@ class CreateCarsTable extends Migration
             $table->string('color');
             $table->string('license_plate')->unique();
             $table->bigInteger("km");
+            $table->date('next_maintenance_date');
             $table->timestamps();
         });
 

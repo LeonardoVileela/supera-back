@@ -16,7 +16,7 @@ class Maintenance extends Model
     protected $fillable = [
         'id',
         'maintenance_date',
-        'next_maintenance_date',
+        'km',
         'car_id'
     ];
 
