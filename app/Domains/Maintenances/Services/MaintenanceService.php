@@ -25,7 +25,7 @@ class MaintenanceService
     public function saveMaintenance(Request $request, $id): \Illuminate\Http\JsonResponse
     {
 
-        $car =  $this->carRepository->getById($id);
+        $car = $this->carRepository->getById($id);
         try {
             $validatedData = $request->validate([
                 'maintenance_date' => 'required',
@@ -35,7 +35,7 @@ class MaintenanceService
             throw new HttpResponseException(response()->json(['message' => 'invalid car'], 400));
         }
 
-        $nextDate = date('Y-m-d', strtotime($validatedData['maintenance_date']. ' + '. $this->calcNextMaintenance($id) .' day'));
+        $nextDate = $this->calcNextMaintenance($id, $validatedData['maintenance_date']);
 
 
         $maintenance = $this->maintenanceRepository->create([
@@ -71,7 +71,7 @@ class MaintenanceService
         $car['license_plate'] = $validatedData['license_plate'];
         $car['km'] = $validatedData['km'];
 
-        if($this->carRepository->update($id, $car)){
+        if ($this->carRepository->update($id, $car)) {
             return response()->json();
         }
 
@@ -100,20 +100,40 @@ class MaintenanceService
         return response()->json($this->carRepository->getCarsWithMaintenance($request->user()->id), 200);
     }
 
-    private function calcNextMaintenance($id){
+    public function calcNextMaintenance($id, $validDate)
+    {
+        if (gettype($validDate) == 'string') {
+            $car = $this->carRepository->getById($id);
+            $year = $car->year . "-01-01";
+            $date1 = new DateTime($year);
+            $date2 = new DateTime($validDate);
+            $interval = $date2->diff($date1)->format('%a');
+
+            $media = $car->km / $interval;
+            $days = 10000 / $media;
+
+            if ($days > 160) {
+                return 160;
+            }
+
+            return date('Y-m-d', strtotime($validDate . ' + ' . $days . ' day'));
+        }
+
         $car = $this->carRepository->getById($id);
         $year = $car->year . "-01-01";
         $date1 = new DateTime($year);
-        $date2 = new DateTime(date("Y/m/d"));
+        $date2 = $validDate;
         $interval = $date2->diff($date1)->format('%a');
 
         $media = $car->km / $interval;
         $days = 10000 / $media;
+        $days = (int)round($days);
 
-        if($days > 160){
+        if ($days > 160) {
             return 160;
         }
-        return $days;
+
+        return date('Y-m-d', strtotime($validDate->format('Y-m-d') . ' + ' . $days . ' day'));
     }
 
 

@@ -4,6 +4,8 @@ namespace App\Domains\Cars\Services;
 
 
 use App\Domains\Cars\Repositories\CarRepository;
+use App\Domains\Maintenances\Services\MaintenanceService;
+use DateTime;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -13,9 +15,13 @@ class CarService
 
     private $carRepository;
 
-    public function __construct(CarRepository $carRepository)
+    private $maintenanceService;
+
+    public function __construct(CarRepository $carRepository, MaintenanceService $maintenanceService)
     {
         $this->carRepository = $carRepository;
+
+        $this->maintenanceService = $maintenanceService;
     }
 
     public function saveCar(Request $request): \Illuminate\Http\JsonResponse
@@ -40,6 +46,9 @@ class CarService
             'km' => $validatedData['km'],
             'user_id' => $request->user()->id
         ]);
+
+        $car->next_maintenance_date = $this->maintenanceService->calcNextMaintenance($car->id, new DateTime(date("Y/m/d")));
+        $car->update();
 
         return response()->json($car, 201);
     }
