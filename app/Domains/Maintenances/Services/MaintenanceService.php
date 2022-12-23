@@ -113,7 +113,7 @@ class MaintenanceService
             $days = 10000 / $media;
 
             if ($days > 160) {
-                return 160;
+                $days = 160;
             }
 
             return date('Y-m-d', strtotime($validDate . ' + ' . $days . ' day'));
@@ -130,7 +130,7 @@ class MaintenanceService
         $days = (int)round($days);
 
         if ($days > 160) {
-            return 160;
+            $days = 160;
         }
 
         return date('Y-m-d', strtotime($validDate->format('Y-m-d') . ' + ' . $days . ' day'));

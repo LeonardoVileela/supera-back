@@ -9,7 +9,9 @@ class CarRepository
 {
     public function getAll($id): Collection
     {
-        return Car::all()->where('user_id', $id);
+        return Car::all()->where('user_id', $id)->sortBy([
+            ['created_at', 'desc']
+        ]);
     }
     public function getCarsWithMaintenance($id): Collection
     {
