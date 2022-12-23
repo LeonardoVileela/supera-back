@@ -44,4 +44,9 @@ class AuthService
         // delete the current token that was used for the request
         //$request->user()->currentAccessToken()->delete();
     }
+
+    public function isAuthenticated(Request $request): \Illuminate\Http\JsonResponse
+    {
+        return response()->json();
+    }
 }

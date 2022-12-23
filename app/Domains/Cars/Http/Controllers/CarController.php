@@ -16,7 +16,7 @@ class CarController extends Controller
         $this->carService = $carService;
     }
 
-    public function all(Request $request, $id): JsonResponse
+    public function all(Request $request): JsonResponse
     {
         return $this->carService->all($request);
     }

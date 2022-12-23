@@ -25,4 +25,9 @@ class AuthController extends Controller
     {
         return $this->authService->logout($request);
     }
+
+    public function isAuthenticated(Request $request): \Illuminate\Http\JsonResponse
+    {
+        return $this->authService->isAuthenticated($request);
+    }
 }
