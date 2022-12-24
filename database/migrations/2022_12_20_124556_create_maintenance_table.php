@@ -17,6 +17,7 @@ class CreateMaintenanceTable extends Migration
             $table->uuid('id')->primary();
             $table->date('maintenance_date');
             $table->bigInteger("km");
+            $table->string("description");
             $table->timestamps();
 
         });

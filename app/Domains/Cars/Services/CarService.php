@@ -74,6 +74,9 @@ class CarService
         $car['km'] = $validatedData['km'];
 
         if($this->carRepository->update($id, $car)){
+            $car = $this->carRepository->getById($id);
+            $car->next_maintenance_date = $this->maintenanceService->calcNextMaintenance($car->id, new DateTime(date("Y/m/d")));
+            $car->update();
             return response()->json();
         }
 

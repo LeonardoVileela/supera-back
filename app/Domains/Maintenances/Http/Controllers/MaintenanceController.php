@@ -4,6 +4,7 @@ namespace App\Domains\Maintenances\Http\Controllers;
 
 use App\Domains\Maintenances\Services\MaintenanceService;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class MaintenanceController extends Controller
@@ -16,24 +17,12 @@ class MaintenanceController extends Controller
         $this->maintenanceService = $maintenanceService;
     }
 
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function all(Request $request, $id): JsonResponse
     {
-        //
+        return $this->maintenanceService->all($request, $id);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function save(Request $request, $id): \Illuminate\Http\JsonResponse
+    public function save(Request $request, $id): JsonResponse
     {
         return $this->maintenanceService->saveMaintenance($request, $id);
     }

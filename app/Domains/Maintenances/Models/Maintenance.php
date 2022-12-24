@@ -17,6 +17,7 @@ class Maintenance extends Model
         'id',
         'maintenance_date',
         'km',
+        'description',
         'car_id'
     ];
 

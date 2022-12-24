@@ -29,7 +29,8 @@ class MaintenanceService
         try {
             $validatedData = $request->validate([
                 'maintenance_date' => 'required',
-                'km' => 'required'
+                'km' => 'required',
+                'description' => 'required|string',
             ]);
         } catch (\Exception $e) {
             throw new HttpResponseException(response()->json(['message' => 'invalid car'], 400));
@@ -41,6 +42,7 @@ class MaintenanceService
         $maintenance = $this->maintenanceRepository->create([
             'maintenance_date' => $validatedData['maintenance_date'],
             'km' => $validatedData['km'],
+            'description' => $validatedData['description'],
             'car_id' => $id,
         ]);
 
@@ -51,33 +53,6 @@ class MaintenanceService
         return response()->json($maintenance, 201);
     }
 
-    public function updateCar(Request $request, $id): \Illuminate\Http\JsonResponse
-    {
-        try {
-            $validatedData = $request->validate([
-                'model' => 'required|string|max:255',
-                'year' => 'required',
-                'color' => 'required|string|max:255',
-                'license_plate' => 'required|string',
-                'km' => 'required'
-            ]);
-        } catch (\Exception $e) {
-            throw new HttpResponseException(response()->json(['message' => 'invalid car'], 400));
-        }
-
-        $car['model'] = $validatedData['model'];
-        $car['year'] = $validatedData['year'];
-        $car['color'] = $validatedData['color'];
-        $car['license_plate'] = $validatedData['license_plate'];
-        $car['km'] = $validatedData['km'];
-
-        if ($this->carRepository->update($id, $car)) {
-            return response()->json();
-        }
-
-        throw new HttpResponseException(response()->json(['message' => 'invalid car'], 400));
-
-    }
 
     public function deleteCar($id): \Illuminate\Http\JsonResponse
     {
@@ -90,9 +65,13 @@ class MaintenanceService
         return response()->json();
     }
 
-    public function all(Request $request): \Illuminate\Http\JsonResponse
+    public function all(Request $request, $id): \Illuminate\Http\JsonResponse
     {
-        return response()->json($this->carRepository->getAll($request->user()->id), 200);
+        $car = $this->carRepository->getById($id);
+        if ($car->user_id != $request->user()->id) {
+            throw new HttpResponseException(response()->json(['message' => 'invalid car'], 400));
+        }
+        return response()->json($this->maintenanceRepository->getAll($id), 200);
     }
 
     public function carsWithMaintenance(Request $request): \Illuminate\Http\JsonResponse

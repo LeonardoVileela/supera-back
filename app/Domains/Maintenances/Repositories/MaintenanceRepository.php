@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Collection;
 
 class MaintenanceRepository
 {
-    public function getAll(): Collection
+    public function getAll($car_id): Collection
     {
-        return Maintenance::all();
+        return Maintenance::all()->where('car_id', $car_id)->sortBy([
+            ['created_at', 'desc']
+        ]);
     }
 
     public function getById($id): Maintenance
