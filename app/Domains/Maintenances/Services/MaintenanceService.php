@@ -26,6 +26,9 @@ class MaintenanceService
     {
 
         $car = $this->carRepository->getById($id);
+        if ($car->user_id != $request->user()->id) {
+            throw new HttpResponseException(response()->json(['message' => 'invalid car'], 400));
+        }
         try {
             $validatedData = $request->validate([
                 'maintenance_date' => 'required',
@@ -33,7 +36,7 @@ class MaintenanceService
                 'description' => 'required|string',
             ]);
         } catch (\Exception $e) {
-            throw new HttpResponseException(response()->json(['message' => 'invalid car'], 400));
+            throw new HttpResponseException(response()->json(['message' => 'invalid Maintenance'], 400));
         }
 
         $nextDate = $this->calcNextMaintenance($id, $validatedData['maintenance_date']);
@@ -54,14 +57,19 @@ class MaintenanceService
     }
 
 
-    public function deleteCar($id): \Illuminate\Http\JsonResponse
+    public function deleteMaintenance(Request $request, $id): \Illuminate\Http\JsonResponse
     {
         try {
-            $this->carRepository->getById($id);
+            $maintenance = $this->maintenanceRepository->getById($id);
+            $car = $maintenance->car();
         } catch (\Exception $e) {
             throw new HttpResponseException(response()->json(['message' => 'invalid id'], 400));
         }
-        $this->carRepository->delete($id);
+
+        if ($car->user_id != $request->user()->id) {
+            throw new HttpResponseException(response()->json(['message' => 'invalid car'], 400));
+        }
+        $this->maintenanceRepository->delete($id);
         return response()->json();
     }
 
@@ -74,10 +82,7 @@ class MaintenanceService
         return response()->json($this->maintenanceRepository->getAll($id), 200);
     }
 
-    public function carsWithMaintenance(Request $request): \Illuminate\Http\JsonResponse
-    {
-        return response()->json($this->carRepository->getCarsWithMaintenance($request->user()->id), 200);
-    }
+
 
     public function calcNextMaintenance($id, $validDate)
     {
