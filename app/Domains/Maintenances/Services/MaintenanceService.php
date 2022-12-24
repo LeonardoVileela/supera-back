@@ -61,7 +61,7 @@ class MaintenanceService
     {
         try {
             $maintenance = $this->maintenanceRepository->getById($id);
-            $car = $maintenance->car();
+            $car = $this->carRepository->getById($maintenance->car_id);
         } catch (\Exception $e) {
             throw new HttpResponseException(response()->json(['message' => 'invalid id'], 400));
         }
