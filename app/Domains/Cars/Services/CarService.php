@@ -8,7 +8,6 @@ use App\Domains\Maintenances\Services\MaintenanceService;
 use DateTime;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class CarService
 {

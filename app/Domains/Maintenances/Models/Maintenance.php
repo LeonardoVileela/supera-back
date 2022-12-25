@@ -3,8 +3,6 @@
 namespace App\Domains\Maintenances\Models;
 
 use App\Domains\Cars\Models\Car;
-use App\Domains\Users\Models\User;
-use App\Traits\hasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;

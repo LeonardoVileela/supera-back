@@ -35,13 +35,8 @@ class AuthService
 
     public function logout(Request $request): \Illuminate\Http\JsonResponse
     {
-
-        // delete all tokens, essentially logging the user out
         $request->user()->tokens()->delete();
         return response()->json();
-
-        // delete the current token that was used for the request
-        //$request->user()->currentAccessToken()->delete();
     }
 
     public function isAuthenticated(Request $request): \Illuminate\Http\JsonResponse

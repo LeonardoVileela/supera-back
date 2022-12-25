@@ -4,7 +4,6 @@ namespace App\Domains\Users\Models;
 
 
 use App\Domains\Cars\Models\Car;
-use App\Domains\Maintenances\Models\Maintenance;
 use Illuminate\Foundation\Auth\User as Authentication;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
