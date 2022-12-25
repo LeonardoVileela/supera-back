@@ -4,6 +4,7 @@ namespace App\Domains\Maintenances\Repositories;
 
 use App\Domains\Maintenances\Models\Maintenance;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 
 class MaintenanceRepository
 {
@@ -12,6 +13,21 @@ class MaintenanceRepository
         return Maintenance::all()->where('car_id', $car_id)->sortBy([
             ['created_at', 'desc']
         ]);
+    }
+
+    public function getAllRecent($id): \Illuminate\Support\Collection
+    {
+        return DB::table('maintenances')->whereBetween('maintenance_date', [now(), now()->addDays(30)])
+            ->join('cars', 'maintenances.car_id', '=', 'cars.id')
+            ->where('user_id', $id)->get();
+
+            /*Maintenance::all()
+            ->whereBetween('maintenance_date', [now(), now()->addDays(30)])
+            ->join('cars', 'maintenances.car_id', '=', 'cars.id');*/
+
+               /* ->sortBy([
+            ['maintenances.created_at', 'desc']
+        ]);*/
     }
 
     public function getById($id): Maintenance

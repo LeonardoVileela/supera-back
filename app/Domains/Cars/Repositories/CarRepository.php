@@ -13,6 +13,16 @@ class CarRepository
             ['created_at', 'desc']
         ]);
     }
+
+    public function getAllNextMaintenance($id): Collection
+    {
+        return Car::all()->where('user_id', $id)
+            ->whereBetween('maintenance_date', [now(), now()->addDays(30)])
+            ->sortBy([
+                ['next_maintenance_date', 'desc']
+            ]);
+    }
+
     public function getCarsWithMaintenance($id): Collection
     {
         return Car::with(['maintenance'])->where('user_id', $id)->get();

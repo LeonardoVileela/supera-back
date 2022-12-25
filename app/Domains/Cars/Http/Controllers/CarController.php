@@ -21,6 +21,11 @@ class CarController extends Controller
         return $this->carService->all($request);
     }
 
+    public function allNextMaintenance(Request $request): JsonResponse
+    {
+        return $this->carService->allNextMaintenance($request);
+    }
+
     public function closeToMaintenanceDate(Request $request): JsonResponse
     {
         return $this->carService->carsWithMaintenance($request);
@@ -46,4 +51,5 @@ class CarController extends Controller
     {
         return $this->carService->deleteCar($id);
     }
+
 }

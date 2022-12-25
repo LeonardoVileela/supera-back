@@ -82,6 +82,10 @@ class MaintenanceService
         return response()->json($this->maintenanceRepository->getAll($id), 200);
     }
 
+    public function allRecent(Request $request): \Illuminate\Http\JsonResponse
+    {
+        return response()->json($this->maintenanceRepository->getAllRecent($request->user()->id), 200);
+    }
 
 
     public function calcNextMaintenance($id, $validDate)

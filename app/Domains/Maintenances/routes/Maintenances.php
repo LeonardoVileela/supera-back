@@ -5,3 +5,4 @@ use Illuminate\Support\Facades\Route;
 Route::post('/save/{id}', [\App\Domains\Maintenances\Http\Controllers\MaintenanceController::class, 'save'])->middleware('auth:sanctum');
 Route::get('/all/{id}', [\App\Domains\Maintenances\Http\Controllers\MaintenanceController::class, 'all'])->middleware('auth:sanctum');
 Route::delete('/delete/{id}', [\App\Domains\Maintenances\Http\Controllers\MaintenanceController::class, 'delete'])->middleware('auth:sanctum');
+Route::get('/all-recent', [\App\Domains\Maintenances\Http\Controllers\MaintenanceController::class, 'allRecent'])->middleware('auth:sanctum');

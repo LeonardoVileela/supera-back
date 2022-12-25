@@ -7,4 +7,5 @@ Route::get('/all', [\App\Domains\Cars\Http\Controllers\CarController::class, 'al
 Route::get('/maintenance', [\App\Domains\Cars\Http\Controllers\CarController::class, 'closeToMaintenanceDate'])->middleware('auth:sanctum');
 Route::put('/update/{id}', [\App\Domains\Cars\Http\Controllers\CarController::class, 'update'])->middleware('auth:sanctum');
 Route::delete('/delete/{id}', [\App\Domains\Cars\Http\Controllers\CarController::class, 'delete'])->middleware('auth:sanctum');
+Route::get('/all', [\App\Domains\Cars\Http\Controllers\CarController::class, 'allNextMaintenance'])->middleware('auth:sanctum');
 
