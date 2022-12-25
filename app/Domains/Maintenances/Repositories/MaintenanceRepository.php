@@ -15,21 +15,6 @@ class MaintenanceRepository
         ]);
     }
 
-    public function getAllRecent($id): \Illuminate\Support\Collection
-    {
-        return DB::table('maintenances')->whereBetween('maintenance_date', [now(), now()->addDays(30)])
-            ->join('cars', 'maintenances.car_id', '=', 'cars.id')
-            ->where('user_id', $id)->get();
-
-            /*Maintenance::all()
-            ->whereBetween('maintenance_date', [now(), now()->addDays(30)])
-            ->join('cars', 'maintenances.car_id', '=', 'cars.id');*/
-
-               /* ->sortBy([
-            ['maintenances.created_at', 'desc']
-        ]);*/
-    }
-
     public function getById($id): Maintenance
     {
         return Maintenance::findOrFail($id);

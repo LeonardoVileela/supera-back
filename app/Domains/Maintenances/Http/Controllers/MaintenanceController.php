@@ -22,11 +22,6 @@ class MaintenanceController extends Controller
         return $this->maintenanceService->all($request, $id);
     }
 
-    public function allRecent(Request $request): JsonResponse
-    {
-        return $this->maintenanceService->allRecent($request);
-    }
-
     public function save(Request $request, $id): JsonResponse
     {
         return $this->maintenanceService->saveMaintenance($request, $id);
