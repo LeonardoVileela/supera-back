@@ -17,7 +17,7 @@ class CarRepository
     public function getAllNextMaintenance($id): Collection
     {
         return Car::all()->where('user_id', $id)
-            ->whereBetween('maintenance_date', [now(), now()->addDays(30)])
+            ->whereBetween('next_maintenance_date', [now(), now()->addDays(30)])
             ->sortBy([
                 ['next_maintenance_date', 'desc']
             ]);
