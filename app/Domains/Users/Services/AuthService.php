@@ -37,8 +37,7 @@ class AuthService
     {
 
         // delete all tokens, essentially logging the user out
-        //$request->user()->tokens()->delete();
-        $request->user()->currentAccessToken()->delete();
+        $request->user()->tokens()->delete();
         return response()->json();
 
         // delete the current token that was used for the request
