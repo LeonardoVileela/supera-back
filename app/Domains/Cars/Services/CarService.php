@@ -97,8 +97,6 @@ class CarService
 
     public function all(Request $request): \Illuminate\Http\JsonResponse
     {
-        var_dump($this->carRepository->getAll($request->user()->id));
-        die();
         return response()->json($this->carRepository->getAll($request->user()->id), 200);
     }
 
