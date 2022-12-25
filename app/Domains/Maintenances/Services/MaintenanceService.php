@@ -94,6 +94,7 @@ class MaintenanceService
 
             $media = $car->km / $interval;
             $days = 10000 / $media;
+            $days = (int)round($days);
 
             if ($days > 160) {
                 $days = 160;
